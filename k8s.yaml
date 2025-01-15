@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-jenkin-docker-k8s-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: jdcontainer
+  template:
+    metadata:
+      labels:
+        app: jdcontainer
+    spec:
+      containers:
+      - name: jdcontainer
+        image: aibeg/jenkinpipelinedocker:1.3
+        ports:
+        - containerPort: 8082
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: git-jenkin-docker-k8s-service
+  labels:
+    app: jdcontainer
+spec:
+  type: NodePort
+  selector:
+    app: jdcontainer
+  ports:
+  - port: 8082
+    targetPort: 8082
+    nodePort: 30082 # Kubernetes will allocate a port if not specified (range: 30000-32767)
