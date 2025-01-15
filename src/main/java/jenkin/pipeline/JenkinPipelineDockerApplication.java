@@ -14,6 +14,11 @@ public class JenkinPipelineDockerApplication {
 		return "Jenkin docker pipeline builded successfully...";
 	}
 
+	@GetMapping("/2")
+	public String message2() {
+		return "new commit..";
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(JenkinPipelineDockerApplication.class, args);
 	}
